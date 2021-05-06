@@ -73,24 +73,19 @@ extension ContactListViewController {
 
 // MARK: - Private Methods
 extension ContactListViewController {
-    private func downloadData() {
+    @objc private func downloadData() {
         NetworkManager.shared.getUsers { results in
             self.contacts = results
             self.tableView.reloadData()
+            if self.refreshControl != nil {
+                self.refreshControl?.endRefreshing()
+            }
         }
     }
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
         refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl?.addTarget(self, action: #selector(updateView), for: .valueChanged)
-    }
-    
-    @objc private func updateView() {
-        NetworkManager.shared.getUsers { results in
-            self.contacts = results
-            self.refreshControl?.endRefreshing()
-            self.tableView.reloadData()
-        }
+        refreshControl?.addTarget(self, action: #selector(downloadData), for: .valueChanged)
     }
 }
 

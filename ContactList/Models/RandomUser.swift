@@ -10,16 +10,16 @@ import Foundation
 
 // MARK: - Result
 struct User: Codable {
-    var gender: String?
-    var name: Name?
-    var location: Location?
-    var email: String?
-    var login: Login?
-    var dob, registered: Dob?
-    var phone, cell: String?
-    var id: ID?
-    var picture: Picture?
-    var nat: String?
+    let gender: String?
+    let name: Name?
+    let location: Location?
+    let email: String?
+    let login: Login?
+    let dob, registered: Dob?
+    let phone, cell: String?
+    let id: ID?
+    let picture: Picture?
+    let nat: String?
     
     init(value: [String: Any]) {
         gender = value["gender"] as? String
@@ -51,11 +51,6 @@ struct User: Codable {
         picture = Picture(value: pictureDict)
         
         nat = value["nat"] as? String
-    }
-    
-    init(firstName: String, lastName: String) {
-        let name = Name(first: firstName, last: lastName)
-        self.name = name
     }
     
     static func getRandomUser(from value: Any) -> [User]? {
